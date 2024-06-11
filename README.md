@@ -22,3 +22,7 @@ docker exec -it 984a4f44138f bash
 docker run -d --name mycontainer -p 8080:80 website-cms
 docker cp /path/to/info.php <container_id_or_name>:/var/www/html/info.php
 docker cp C:/xampp/htdocs/walaa_test/phpinfo.php 770b0a043d55:/var/www/html/phpinfo.php
+
+new comments
+docker build -t my_php_nginx .
+docker run -p 80:80 my_php_nginx
