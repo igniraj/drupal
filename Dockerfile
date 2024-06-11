@@ -17,19 +17,10 @@ RUN apk add --no-cache \
     libxml2-dev \
     libxslt-dev \
     libffi-dev \
-    openssl-dev \
-    libjpeg \
-    libpng \
-    freetype \
-    libwebp \
-    libxpm \
-    libzip \
-    oniguruma \
-    libxml2 \
-    libxslt \
-    libffi \
-    openssl \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp --with-xpm \
+    openssl-dev
+
+# Install PHP extensions including GD
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp --with-xpm \
     && docker-php-ext-install -j$(nproc) \
     curl \
     gd \
@@ -51,7 +42,7 @@ RUN curl -sS https://getcomposer.org/download/2.7.6/composer.phar -o /usr/local/
 RUN composer global require drush/drush
 
 # Configure PHP
-#COPY php.ini /usr/local/etc/php/
+COPY php.ini /usr/local/etc/php/
 
 # Configure Nginx
 COPY nginx.conf /etc/nginx/nginx.conf
@@ -70,4 +61,3 @@ ENV PATH="/root/.composer/vendor/bin:${PATH}"
 
 # Start Supervisor
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
-
